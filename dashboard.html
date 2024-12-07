@@ -31,13 +31,11 @@
             display: inline-block;
         }
 
-        .dropdown button {
-            background-color: #1e3a8a;
+        .dropdown a {
             color: white;
-            border: none;
-            font-size: 16px;
+            text-decoration: none;
             padding: 10px;
-            cursor: pointer;
+            font-size: 16px;
         }
 
         .dropdown-content {
@@ -54,7 +52,6 @@
             text-decoration: none;
             display: block;
             padding: 10px;
-            text-align: left;
         }
 
         .dropdown-content a:hover {
@@ -69,7 +66,7 @@
             background-color: #1e3a8a;
             color: white;
             text-align: center;
-            padding: 15px 15px;
+            padding: 15px;
         }
 
         .balance-section h1 {
@@ -132,8 +129,7 @@
             <a href="#">Menu</a>
             <div class="dropdown-content">
                 <a href="index.html">Logout</a>
-                <a href="withdraw.html">withdraw</a>
-
+                <a href="withdraw.html">Withdraw</a>
             </div>
         </div>
     </div>
@@ -162,49 +158,71 @@
     </div>
 
     <script>
-        // Dynamic Date
-        const dateElement = document.getElementById('date');
-        const today = new Date();
-        dateElement.textContent = today.toDateString();
+        // Error handling for the script
+        try {
+            // Display the current date
+            const dateElement = document.getElementById('date');
+            const today = new Date();
+            dateElement.textContent = today.toDateString();
 
-        // Balance
-        const balance = 260465.60;
+            // Balance (simulated for this demo)
+            const balance = 260465.60;
 
-        // Populate transactions
-        const transactionTable = document.getElementById('transactionTable').getElementsByTagName('tbody')[0];
-        const transactionDescriptions = ['Grocery Store', 'Gas Station', 'Online Purchase', 'Restaurant'];
-        const generateRandomTransaction = (maxAmount) => {
-            const amount = (Math.random() * maxAmount).toFixed(2);
-            const year = today.getFullYear() - Math.floor(Math.random() * 5);
-            const month = String(Math.floor(Math.random() * 12) + 1).padStart(2, '0');
-            const day = String(Math.floor(Math.random() * 28) + 1).padStart(2, '0');
-            const date = `${year}-${month}-${day}`;
-            const description = transactionDescriptions[Math.floor(Math.random() * transactionDescriptions.length)];
-            return { date, description, amount: parseFloat(amount) };
-        };
+            // Transaction descriptions
+            const transactionDescriptions = [
+                'Grocery Store',
+                'Gas Station',
+                'Online Purchase',
+                'Restaurant',
+                'Utility Bill',
+                'Subscription Service'
+            ];
 
-        const populateTransactions = (totalAmount) => {
-            transactionTable.innerHTML = '';
-            let remainingAmount = totalAmount;
-            while (remainingAmount > 0) {
-                const transaction = generateRandomTransaction(remainingAmount);
-                remainingAmount -= transaction.amount;
-                transactionTable.innerHTML += `
-                    <tr>
-                        <td>${transaction.date}</td>
-                        <td>${transaction.description}</td>
-                        <td>-$${transaction.amount.toFixed(2)}</td>
-                    </tr>
-                `;
-            }
-        };
+            // Generate a random transaction
+            const generateRandomTransaction = (maxAmount) => {
+                const amount = (Math.random() * maxAmount).toFixed(2);
+                const year = today.getFullYear() - Math.floor(Math.random() * 5);
+                const month = String(Math.floor(Math.random() * 12) + 1).padStart(2, '0');
+                const day = String(Math.floor(Math.random() * 28) + 1).padStart(2, '0');
+                const date = `${year}-${month}-${day}`;
+                const description = transactionDescriptions[Math.floor(Math.random() * transactionDescriptions.length)];
+                return { date, description, amount: parseFloat(amount) };
+            };
 
-        populateTransactions(balance);
+            // Populate the transaction table
+            const populateTransactions = (totalAmount) => {
+                const transactionTable = document.getElementById('transactionTable').getElementsByTagName('tbody')[0];
+                transactionTable.innerHTML = ''; // Clear previous transactions
+                let remainingAmount = totalAmount;
 
-        // View More Transactions
-        document.getElementById('viewMore').addEventListener('click', () => {
+                while (remainingAmount > 0) {
+                    const transaction = generateRandomTransaction(remainingAmount);
+                    if (transaction.amount <= remainingAmount) {
+                        remainingAmount -= transaction.amount;
+                        transactionTable.innerHTML += `
+                            <tr>
+                                <td>${transaction.date}</td>
+                                <td>${transaction.description}</td>
+                                <td>-$${transaction.amount.toFixed(2)}</td>
+                            </tr>
+                        `;
+                    } else {
+                        break; // Exit loop when no more valid transactions can be generated
+                    }
+                }
+            };
+
+            // Populate initial transactions
             populateTransactions(balance);
-        });
+
+            // Handle "View More Transactions" button
+            document.getElementById('viewMore').addEventListener('click', () => {
+                populateTransactions(balance);
+            });
+        } catch (error) {
+            console.error('An error occurred:', error);
+            alert('Something went wrong while loading the page. Please try again later.');
+        }
     </script>
 </body>
 </html>
