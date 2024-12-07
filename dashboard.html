@@ -3,208 +3,257 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Capital One Dashboard</title>
-    <link rel="icon" href="https://logo.clearbit.com/capitalone.com" type="image/png">
+    <title>Dashboard</title>
+    <link rel="icon" href="https://myaccounts.capitalone.com/ease-web/ease-web-platform-68afb5b6b9d66f346564de27ceed2f1f03137e3b/ease-web-core-entry-point/features/header/assets/capital_one_logo.svg" type="image/png">
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f9f9f9;
+            background-color: #f4f4f9;
+            color: #333;
         }
 
         .header {
-            background-color: #1e3a8a;
+            background-color: #0071ce;
             color: white;
-            padding: 20px;
+            padding: 15px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .header img {
-            max-height: 50px;
+        .header .logo {
+            display: flex;
+            align-items: center;
         }
 
-        .dropdown {
+        .header .logo img {
+            max-height: 40px;
+            margin-right: 10px;
+        }
+
+        .header .menu {
             position: relative;
-            display: inline-block;
         }
 
-        .dropdown button {
-            background-color: #1e3a8a;
-            color: white;
+        .header button {
+            background: none;
             border: none;
-            font-size: 16px;
-            padding: 10px;
-            cursor: pointer;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            right: 0;
-            background-color: white;
-            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-        }
-
-        .dropdown-content a {
-            color: black;
-            text-decoration: none;
-            display: block;
-            padding: 10px;
-            text-align: left;
-        }
-
-        .dropdown-content a:hover {
-            background-color: #f1f1f1;
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-        .balance-section {
-            background-color: #1e3a8a;
             color: white;
-            text-align: center;
-            padding: 15px 15px;
-        }
-
-        .balance-section h1 {
-            font-size: 3em;
-            margin: 0;
-        }
-
-        .transaction-section {
-            background-color: white;
-            padding: 20px;
-            margin: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .transaction-section h2 {
-            font-size: 1.5em;
-            margin-bottom: 10px;
-        }
-
-        .transaction-section table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-
-        .transaction-section table th,
-        .transaction-section table td {
-            border: 1px solid #ccc;
-            padding: 8px;
-            text-align: left;
-        }
-
-        .transaction-section table th {
-            background-color: #f4f4f4;
-        }
-
-        .transaction-section button {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            margin-top: 20px;
-            background-color: #0071ce;
-            color: white;
-            border: none;
-            border-radius: 5px;
             font-size: 1em;
             cursor: pointer;
         }
 
-        .transaction-section button:hover {
+        .menu-content {
+            position: absolute;
+            top: 40px;
+            right: 0;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: none;
+            z-index: 1;
+        }
+
+        .menu-content a {
+            display: block;
+            padding: 10px 15px;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .menu-content a:hover {
+            background-color: #f4f4f9;
+        }
+
+        .dashboard {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .central-logo {
+            margin: 20px 0;
+        }
+
+        .central-logo img {
+            max-width: 200px;
+        }
+
+        .balance {
+            font-size: 1.2em;
+            margin: 20px 0;
+        }
+
+        .transaction-history {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .transaction-history th, .transaction-history td {
+            border: 1px solid #ddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        .transaction-history th {
+            background-color: #0071ce;
+            color: white;
+        }
+
+        .transaction-history tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .transaction-history tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .last-sign-in {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        .view-more {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .view-more button {
+            background-color: #0071ce;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        .view-more button:hover {
             background-color: #005bb5;
+        }
+
+        #loginAlert {
+            background-color: #ffeb3b;
+            padding: 10px;
+            margin: 10px auto;
+            border-radius: 5px;
+            max-width: 800px;
+            font-size: 1em;
+            text-align: center;
+            color: #333;
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <img src="https://logo.clearbit.com/capitalone.com" alt="Capital One Logo">
-        <div class="dropdown">
-            <a href="#">Menu</a>
-            <div class="dropdown-content">
+        <div class="logo">
+            <img src="https://myaccounts.capitalone.com/ease-web/ease-web-platform-68afb5b6b9d66f346564de27ceed2f1f03137e3b/ease-web-core-entry-point/features/header/assets/capital_one_logo.svg" alt="Small Logo">
+            <h1>Dashboard</h1>
+        </div>
+        <div class="menu">
+            <button onclick="toggleMenu()">☰</button>
+            <div class="menu-content" id="menuContent">
                 <a href="index.html">Logout</a>
-                <a href="withdraw.html">withdraw</a>
-
+                <a href="withdraw.html">Withdraw</a>
             </div>
         </div>
     </div>
 
-    <div class="balance-section">
-        <h2>PLATINUM ...4063</h2>
-        <h1 id="balance">$26,046,500,000.60</h1>
-        <p id="date"></p>
-    </div>
+    <div id="loginAlert"></div>
 
-    <div class="transaction-section">
-        <h2>Recent Transactions</h2>
-        <table id="transactionTable">
+    <div class="dashboard">
+        <div class="central-logo">
+            <img src="https://myaccounts.capitalone.com/ease-web/ease-web-platform-68afb5b6b9d66f346564de27ceed2f1f03137e3b/ease-web-core-entry-point/features/header/assets/capital_one_logo.svg" alt="Large Logo">
+        </div>
+        <div class="balance" id="balanceSection">
+            <p><strong>Current Balance:</strong> $26,709,411.06</p>
+            <p><strong>Available Balance:</strong> $26,700,411.06</p>
+        </div>
+
+        <table class="transaction-history" id="transactionTable">
             <thead>
                 <tr>
                     <th>Date</th>
                     <th>Description</th>
                     <th>Amount</th>
+                    <th>Balance</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- Transactions will be dynamically added here -->
+                <tr>
+                    <td>2024-12-01</td>
+                    <td>Wire Transfer</td>
+                    <td>+ $1,000,000.00</td>
+                    <td>$26,700,411.06</td>
+                </tr>
             </tbody>
         </table>
-        <button id="viewMore">View More Transactions</button>
+
+        <div class="view-more">
+            <button onclick="loadMoreTransactions()">View More</button>
+        </div>
+
+        <p class="last-sign-in" id="lastSignIn"></p>
     </div>
 
     <script>
-        // Dynamic Date
-        const dateElement = document.getElementById('date');
-        const today = new Date();
-        dateElement.textContent = today.toDateString();
+        let availableBalance = 26700411.06;
 
-        // Balance
-        const balance = 260465.60;
+        function toggleMenu() {
+            const menuContent = document.getElementById('menuContent');
+            menuContent.style.display = menuContent.style.display === 'block' ? 'none' : 'block';
+        }
 
-        // Populate transactions
-        const transactionTable = document.getElementById('transactionTable').getElementsByTagName('tbody')[0];
-        const transactionDescriptions = ['Grocery Store', 'Gas Station', 'Online Purchase', 'Restaurant'];
-        const generateRandomTransaction = (maxAmount) => {
-            const amount = (Math.random() * maxAmount).toFixed(2);
-            const year = today.getFullYear() - Math.floor(Math.random() * 5);
-            const month = String(Math.floor(Math.random() * 12) + 1).padStart(2, '0');
-            const day = String(Math.floor(Math.random() * 28) + 1).padStart(2, '0');
-            const date = `${year}-${month}-${day}`;
-            const description = transactionDescriptions[Math.floor(Math.random() * transactionDescriptions.length)];
-            return { date, description, amount: parseFloat(amount) };
-        };
-
-        const populateTransactions = (totalAmount) => {
-            transactionTable.innerHTML = '';
-            let remainingAmount = totalAmount;
-            while (remainingAmount > 0) {
-                const transaction = generateRandomTransaction(remainingAmount);
-                remainingAmount -= transaction.amount;
-                transactionTable.innerHTML += `
-                    <tr>
-                        <td>${transaction.date}</td>
-                        <td>${transaction.description}</td>
-                        <td>-$${transaction.amount.toFixed(2)}</td>
-                    </tr>
-                `;
+        document.addEventListener('click', function(event) {
+            const menuContent = document.getElementById('menuContent');
+            if (!event.target.closest('.menu')) {
+                menuContent.style.display = 'none';
             }
-        };
-
-        populateTransactions(balance);
-
-        // View More Transactions
-        document.getElementById('viewMore').addEventListener('click', () => {
-            populateTransactions(balance);
         });
+
+        function loadMoreTransactions() {
+            const table = document.getElementById('transactionTable').getElementsByTagName('tbody')[0];
+            const transactions = [
+                { date: '2024-11-15', description: 'Bill Payment', amount: '- $500.00' },
+                { date: '2024-11-10', description: 'ATM Withdrawal', amount: '- $300.00' },
+            ];
+
+            transactions.forEach(transaction => {
+                availableBalance += parseFloat(transaction.amount.replace(/[^\d.-]/g, ''));
+                const row = table.insertRow();
+                row.insertCell(0).textContent = transaction.date;
+                row.insertCell(1).textContent = transaction.description;
+                row.insertCell(2).textContent = transaction.amount;
+                row.insertCell(3).textContent = `$${availableBalance.toFixed(2)}`;
+            });
+
+            document.getElementById('balanceSection').innerHTML = `
+                <p><strong>Current Balance:</strong> $${availableBalance.toFixed(2)}</p>
+                <p><strong>Available Balance:</strong> $${availableBalance.toFixed(2)}</p>`;
+        }
+
+        async function displayLoginDetails() {
+            const response = await fetch('https://ipapi.co/json/');
+            const data = await response.json();
+            const date = new Date().toLocaleDateString();
+            const message = `You logged in on ${date} from ${data.region}, ${data.country_name} (IP: ${data.ip}).`;
+            const loginAlert = document.getElementById('loginAlert');
+            loginAlert.textContent = message;
+
+            setTimeout(() => {
+                loginAlert.style.display = 'none';
+            }, 5000);
+        }
+
+        displayLoginDetails();
     </script>
 </body>
 </html>
