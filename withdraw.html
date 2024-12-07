@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Withdraw</title>
+    <link rel="icon" href="https://logo.clearbit.com/capitalone.com" type="image/png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .container h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .button-column {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .button-column button {
+            width: 48%;
+            padding: 20px;
+            font-size: 1em;
+            color: white;
+            background-color: #0071ce;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .button-column button:hover {
+            background-color: #005bb5;
+        }
+
+        .message {
+            font-size: 0.9em;
+            color: #555;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .form-group {
+            margin: 10px 0;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .form-group input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .error {
+            color: red;
+            font-size: 0.9em;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Withdrawal</h1>
+       <h1> <a  href="dashboard.html">dashboard</a> </h1>
+        <div class="button-column">
+            <button id="transferButton">Transfer</button>
+            <button id="withdrawButton">Withdrawal</button>
+        </div>
+
+        <!-- Transfer Section -->
+        <div id="transferSection" class="hidden">
+            <h2>Enter Token</h2>
+            <p>If you forgot your token, text/message agent at 334-212-7100.</p>
+            <div class="form-group">
+                <label for="token">Token:</label>
+                <input type="text" id="token" placeholder="Enter token">
+            </div>
+            <button id="authorizeToken">Authorize Token</button>
+            <p id="transferError" class="error"></p>
+        </div>
+
+        <!-- Withdrawal Section -->
+        <div id="withdrawalSection" class="hidden">
+            <h2>Select Payment Method</h2>
+            <button id="addCard">Add Debit/Credit Card</button>
+            <button id="checkingAccount">Checking Account</button>
+        </div>
+
+        <!-- Message -->
+        <p class="message">
+            Note: If added debit or credit card, the payment will take 10 minutes to be available on your card.
+        </p>
+    </div>
+
+    <script>
+        const transferButton = document.getElementById('transferButton');
+        const withdrawButton = document.getElementById('withdrawButton');
+        const transferSection = document.getElementById('transferSection');
+        const withdrawalSection = document.getElementById('withdrawalSection');
+        const authorizeTokenButton = document.getElementById('authorizeToken');
+        const tokenInput = document.getElementById('token');
+        const transferError = document.getElementById('transferError');
+
+        // Token for validation
+        const VALID_TOKEN = '1946194600';
+
+        // Toggle sections
+        transferButton.addEventListener('click', () => {
+            transferSection.classList.remove('hidden');
+            withdrawalSection.classList.add('hidden');
+        });
+
+        withdrawButton.addEventListener('click', () => {
+            transferSection.classList.add('hidden');
+            withdrawalSection.classList.remove('hidden');
+        });
+
+        // Token Authorization
+        authorizeTokenButton.addEventListener('click', () => {
+            if (tokenInput.value === VALID_TOKEN) {
+                alert('Token Authorized! You may proceed.');
+            } else {
+                transferError.textContent = 'Invalid token! Please try again.';
+            }
+        });
+
+        // Navigate to card.html
+        document.getElementById('addCard').addEventListener('click', () => {
+            window.location.href = 'card.html';
+        });
+
+        // Navigate to external.html
+        document.getElementById('checkingAccount').addEventListener('click', () => {
+            window.location.href = 'external.html';
+        });
+    </script>
+</body>
+</html>

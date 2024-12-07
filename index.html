@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capital One Login</title>
+    <link rel="icon" href="https://logo.clearbit.com/capitalone.com" type="image/png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f9f9f9;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .login-container img {
+            max-width: 180px;
+            margin-bottom: 20px;
+        }
+
+        .login-container h2 {
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            color: #333;
+        }
+
+        .login-container input[type="text"],
+        .login-container input[type="password"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+
+        .login-container label {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin: 10px 0;
+        }
+
+        .login-container label input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .login-container button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            background-color: #0071ce;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        .login-container button:hover {
+            background-color: #005bb5;
+        }
+
+        .login-container a {
+            color: #0071ce;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+
+        .login-container a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            color: red;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <img src="https://myaccounts.capitalone.com/ease-web/ease-web-platform-68afb5b6b9d66f346564de27ceed2f1f03137e3b/ease-web-core-entry-point/features/header/assets/capital_one_logo.svg" alt="Capital One Logo">
+        <h2>Sign In</h2>
+        <form id="loginForm">
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <label>
+                <input type="checkbox"> Remember Me
+            </label>
+            <button type="submit">Sign In</button>
+        </form>
+        <p id="errorMessage" class="error-message" style="display: none;">Incorrect credentials. Please visit <a href="https://www.capitalone.com" target="_blank" style="color: red; font-weight: bold;">capitalone.com</a>.</p>
+        <p><a href="capitalone.com">Forgot Username or Password?</a></p>
+        <p><a href="capitalone.com">Set Up Online Access</a></p>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Permanent credentials
+            const correctUsername = "194600";
+            const correctPassword = "David1946@";
+            const enteredUsername = document.getElementById('username').value;
+            const enteredPassword = document.getElementById('password').value;
+
+            // Check credentials
+            if (enteredUsername === correctUsername && enteredPassword === correctPassword) {
+                alert("Welcome, David Victor!");
+                window.location.href = "dashboard.html"; // Redirect to dashboard
+            } else {
+                const errorMessage = document.getElementById('errorMessage');
+                errorMessage.style.display = "block";
+            }
+        });
+    </script>
+</body>
+</html>

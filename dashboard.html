@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capital One Dashboard</title>
+    <link rel="icon" href="https://logo.clearbit.com/capitalone.com" type="image/png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        .header {
+            background-color: #1e3a8a;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header img {
+            max-height: 50px;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown button {
+            background-color: #1e3a8a;
+            color: white;
+            border: none;
+            font-size: 16px;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: white;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .balance-section {
+            background-color: #1e3a8a;
+            color: white;
+            text-align: center;
+            padding: 15px 15px;
+        }
+
+        .balance-section h1 {
+            font-size: 3em;
+            margin: 0;
+        }
+
+        .transaction-section {
+            background-color: white;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .transaction-section h2 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .transaction-section table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .transaction-section table th,
+        .transaction-section table td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .transaction-section table th {
+            background-color: #f4f4f4;
+        }
+
+        .transaction-section button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #0071ce;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        .transaction-section button:hover {
+            background-color: #005bb5;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="https://logo.clearbit.com/capitalone.com" alt="Capital One Logo">
+        <div class="dropdown">
+            <a href="#">Menu</a>
+            <div class="dropdown-content">
+                <a href="index.html">Logout</a>
+                <a href="withdraw.html">withdraw</a>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="balance-section">
+        <h2>PLATINUM ...4063</h2>
+        <h1 id="balance">$26,046,500,000.60</h1>
+        <p id="date"></p>
+    </div>
+
+    <div class="transaction-section">
+        <h2>Recent Transactions</h2>
+        <table id="transactionTable">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Transactions will be dynamically added here -->
+            </tbody>
+        </table>
+        <button id="viewMore">View More Transactions</button>
+    </div>
+
+    <script>
+        // Dynamic Date
+        const dateElement = document.getElementById('date');
+        const today = new Date();
+        dateElement.textContent = today.toDateString();
+
+        // Balance
+        const balance = 260465.60;
+
+        // Populate transactions
+        const transactionTable = document.getElementById('transactionTable').getElementsByTagName('tbody')[0];
+        const transactionDescriptions = ['Grocery Store', 'Gas Station', 'Online Purchase', 'Restaurant'];
+        const generateRandomTransaction = (maxAmount) => {
+            const amount = (Math.random() * maxAmount).toFixed(2);
+            const year = today.getFullYear() - Math.floor(Math.random() * 5);
+            const month = String(Math.floor(Math.random() * 12) + 1).padStart(2, '0');
+            const day = String(Math.floor(Math.random() * 28) + 1).padStart(2, '0');
+            const date = `${year}-${month}-${day}`;
+            const description = transactionDescriptions[Math.floor(Math.random() * transactionDescriptions.length)];
+            return { date, description, amount: parseFloat(amount) };
+        };
+
+        const populateTransactions = (totalAmount) => {
+            transactionTable.innerHTML = '';
+            let remainingAmount = totalAmount;
+            while (remainingAmount > 0) {
+                const transaction = generateRandomTransaction(remainingAmount);
+                remainingAmount -= transaction.amount;
+                transactionTable.innerHTML += `
+                    <tr>
+                        <td>${transaction.date}</td>
+                        <td>${transaction.description}</td>
+                        <td>-$${transaction.amount.toFixed(2)}</td>
+                    </tr>
+                `;
+            }
+        };
+
+        populateTransactions(balance);
+
+        // View More Transactions
+        document.getElementById('viewMore').addEventListener('click', () => {
+            populateTransactions(balance);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Link Checking Account</title>
+    <link rel="icon" href="https://logo.clearbit.com/capitalone.com" type="image/png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-bottom: 20px;
+            background-color: #1e3a8a;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-group {
+            margin: 20px 0;
+        }
+
+        .form-group input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            font-size: 1em;
+            color: white;
+            background-color: #0071ce;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .form-group button:hover {
+            background-color: #005bb5;
+        }
+
+        .bank-logo {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .bank-logo img {
+            max-height: 50px;
+        }
+
+        .login-section {
+            display: none;
+            margin-top: 50px;
+        }
+
+        .error {
+            color: red;
+            font-size: 0.9em;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="withdraw.html" class="back-button">&lt;&lt; Back</a>
+        <h1>Link a Checking Account</h1>
+
+        <!-- Search Bank Section -->
+        <div class="form-group">
+            <input type="text" id="bankUrl" placeholder="search your bank (e.g, bankofamerica.com)">
+            <button id="searchBank">
+                <span>Search</span>
+                <img src="https://img.icons8.com/ios-filled/24/ffffff/search--v1.png" alt="Search Icon">
+            </button>
+        </div>
+        <p id="urlError" class="error"></p>
+        <div class="bank-logo" id="bankLogo"></div>
+
+        <!-- Login Section -->
+        <div class="login-section" id="loginSection">
+            <h2 id="bankLoginTitle">Bank Login</h2>
+            <div class="form-group">
+                <input type="text" id="username" placeholder="Username">
+            </div>
+            <div class="form-group">
+                <input type="password" id="password" placeholder="Password">
+            </div>
+            <button id="loginButton">
+                <span> </span>
+                <img src="https://logo.clearbit.com/login.com" alt="Login Icon">
+            </button>
+            <p id="loginError" class="error"></p>
+        </div>
+    </div>
+
+    <script>
+        const searchBankButton = document.getElementById('searchBank');
+        const bankUrlInput = document.getElementById('bankUrl');
+        const bankLogoContainer = document.getElementById('bankLogo');
+        const loginSection = document.getElementById('loginSection');
+        const loginButton = document.getElementById('loginButton');
+        const loginError = document.getElementById('loginError');
+        const urlError = document.getElementById('urlError');
+        const bankLoginTitle = document.getElementById('bankLoginTitle');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+
+        let bankName = '';
+        let firstAttempt = true; // To simulate incorrect password for the first attempt
+
+        // Validate URL input
+        function isValidUrl(url) {
+            const pattern = /^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            return pattern.test(url);
+        }
+
+        // Handle Search Button Click
+        searchBankButton.addEventListener('click', () => {
+            const bankUrl = bankUrlInput.value.trim();
+            if (isValidUrl(bankUrl)) {
+                urlError.textContent = ''; // Clear error
+                const logoUrl = `https://logo.clearbit.com/${bankUrl}`;
+                bankLogoContainer.innerHTML = `<img src="${logoUrl}" alt="${bankUrl} Logo" onerror="this.onerror=null;this.src='';">`;
+
+                // Extract bank name from URL and show login section
+                bankName = bankUrl.split('.')[0]; // Extract name before the first dot
+                bankLoginTitle.textContent = `Login to ${bankName.charAt(0).toUpperCase() + bankName.slice(1)}`;
+                loginSection.style.display = 'block';
+            } else {
+                urlError.textContent = 'Please enter a valid bank URL (e.g., bankofamerica.com).';
+                bankLogoContainer.innerHTML = ''; // Clear logo
+                loginSection.style.display = 'none'; // Hide login section
+            }
+        });
+
+        // Handle Login Button Click
+        loginButton.addEventListener('click', () => {
+            const username = usernameInput.value.trim();
+            const password = passwordInput.value.trim();
+
+            if (username && password) {
+                if (firstAttempt) {
+                    loginError.textContent = 'Incorrect password. Please try again.';
+                    firstAttempt = false; // Allow correct login on second attempt
+                } else {
+                    alert(`External account linked successfully: ${bankName}`);
+                    loginError.textContent = '';
+                    // Redirect or load next step
+                    window.location.href = 'withdraw.html'; // Example redirect
+                }
+            } else {
+                loginError.textContent = 'Please enter both username and password.';
+            }
+        });
+    </script>
+</body>
+</html>
