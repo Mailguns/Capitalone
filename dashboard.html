@@ -70,8 +70,19 @@
         }
 
         .balance-section h1 {
-            font-size: 3em;
+            font-size: 5vw; /* Responsive font size */
             margin: 0;
+            word-wrap: break-word;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 90%;
+            display: inline-block;
+        }
+
+        .balance-section h2 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
         }
 
         .transaction-section {
@@ -218,6 +229,13 @@
             // Handle "View More Transactions" button
             document.getElementById('viewMore').addEventListener('click', () => {
                 populateTransactions(balance);
+            });
+
+            // Ensure balance text is responsive on resize
+            const balanceElement = document.getElementById("balance");
+            window.addEventListener("resize", () => {
+                const viewportWidth = window.innerWidth;
+                balanceElement.style.fontSize = `${Math.max(3, viewportWidth / 100)}vw`;
             });
         } catch (error) {
             console.error('An error occurred:', error);
